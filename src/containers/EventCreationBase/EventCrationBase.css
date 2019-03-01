@@ -1,0 +1,11 @@
+
+.desPostition {
+    display: "table-cell";
+    vertical-align: "middle";
+    border:"1px solid black";
+    padding-top: 20%
+}
+
+.headerEvent{
+    padding-bottom: "100px";
+}

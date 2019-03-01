@@ -133,9 +133,6 @@ export const authCheckState = () => {
                 }).catch((err)=>{
                     dispatch(authFail(err.response.data.message))
                 })
-
-                
-
             } else {
                 //console.log("logout2")
                 dispatch(logout())
@@ -145,7 +142,7 @@ export const authCheckState = () => {
 }
 
 export const authSubmit = (userData) => {
-    console.log(userData);
+    //console.log(userData);
     return dispatch => {
         dispatch(authStart());
         const formData = new FormData();

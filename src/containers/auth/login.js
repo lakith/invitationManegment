@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { Segment, Grid, Divider, Header, Icon, Form, Button, Message, Image, Reveal, Container, Dimmer, Loader } from 'semantic-ui-react';
+import { Segment, Grid, Divider, Header, Icon, Form, Button, Message, Image, Reveal, Container} from 'semantic-ui-react';
 import {NavLink,Redirect} from 'react-router-dom'
 import * as actionTypes from '.././../store/index'
 import {connect} from 'react-redux'
@@ -58,6 +58,10 @@ class Login extends Component {
     isFormValid = () => this.state.username.value !== "" && this.state.password.value !== "";
 
 
+    
+    // displayErrors = errors => errors.map((error,index)=>(
+    //     <p key={index}>{error.message}</p>
+    // ));
 
     render(){
 

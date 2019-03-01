@@ -1,0 +1,17 @@
+.displayTogether{
+  display:inline !important;
+
+}
+
+@media (max-width: 770px) {
+    .hideevent{
+     display: none !important;
+   }
+}
+
+@media (max-width: 800px) {
+    .hideevent{
+     height: 300px !important;
+   }
+}
+
