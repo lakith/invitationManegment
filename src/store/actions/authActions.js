@@ -1,5 +1,6 @@
 import * as authActions from './actionTypes'
 import axios from '../../axios-base'
+import { resolve, reject } from 'q';
 
 export const authStart = () => {
     return{
@@ -42,7 +43,6 @@ export const authFail = (error) => {
 }
 
 export const logout = ()=> {
-    //console.log("timeout logout2");
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('userId');
@@ -54,7 +54,6 @@ export const logout = ()=> {
 
 export const checkAuthTimeOut = (expirationTime) => {
     return dispatch => {
-        //console.log("timeout logout1");
          setTimeout(()=>{
              dispatch(logout());
          },expirationTime*1000);
@@ -97,17 +96,28 @@ export const authLogin = (username,password) => {
     }
 }
 
+async function f() {
+
+    let promise = new Promise((resolve, reject) => {
+      setTimeout(() => resolve("done!"), 1000)
+    });
+    
+    let result = await promise; // wait till the promise resolves (*)
+
+    console.log(result); // "done!"
+}
+
+
 export const authCheckState = () => {
     return dispatch => {
-        const token = localStorage.getItem('accessToken');
-        console.log(token)
+       const token = localStorage.getItem('accessToken');
+       console.log(token)
         if(!token){
             console.log("logout1")
             dispatch(logout())
         } else {
             const expiratioDate = new Date(localStorage.getItem('expirationDate'));
             if(expiratioDate > new Date()){
-                const refresh = localStorage.getItem('refreshToken');
                 axios({
                     method:'get',
                     url:'/staffUser/get-user-from-token',
@@ -128,13 +138,12 @@ export const authCheckState = () => {
                         },
                         profileUrl:response.data.profileUrl
                     }
-                    dispatch(authSuccess(userData,refresh))
+                    dispatch(authSuccess(userData,token))
                     dispatch(checkAuthTimeOut((expiratioDate.getTime() - new Date().getTime())/1000))
                 }).catch((err)=>{
                     dispatch(authFail(err.response.data.message))
                 })
             } else {
-                //console.log("logout2")
                 dispatch(logout())
             }
         }
@@ -142,7 +151,6 @@ export const authCheckState = () => {
 }
 
 export const authSubmit = (userData) => {
-    //console.log(userData);
     return dispatch => {
         dispatch(authStart());
         const formData = new FormData();
@@ -163,11 +171,8 @@ export const authSubmit = (userData) => {
                 'Accept': 'application/json',
             }
         }).then((response)=>{
-            //console.log("response");
-            //console.log(response);
             dispatch(authSubmitSuccess());
         }).catch((error)=> {
-            //console.log(error.response);
             dispatch(authSubmitError(error.response.data.message));
         })
     }

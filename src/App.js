@@ -11,15 +11,18 @@ import Register from './containers/auth/Register/register';
 import Logout from './containers/auth/Logout/logout';
 import EventCreationMain from './containers/EventCreationMain/EventCreationMain';
 import EventCreationBase from './containers/EventCreationBase/EventCreationBase';
+import Myevents from './containers/MyEvents/MyEvents';
+import Test from './containers/Test/Test';
 
 class App extends Component {
-
+  
   componentDidMount(){
+    
     this.props.onTryAutoSignUp();
   }
 
   render() {
-
+    
     let routes = (
       <Switch>
         <Route path="/register" component={Register}/>
@@ -27,6 +30,8 @@ class App extends Component {
         <Route path="/logout" component={Logout} />
         <Route path="/event-main" component={EventCreationMain} />
         <Route path="/event-base" component={EventCreationBase} />
+        <Route path="/my-events" component={Myevents} />
+        <Route path="/test" component={Test} />
         <Route path="/" exact component={Home} />
         <Redirect to="/" />
       </Switch>

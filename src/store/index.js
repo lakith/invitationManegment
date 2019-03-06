@@ -9,4 +9,8 @@ export {
     authLogin,
     authCheckState,
     logout
-} from './actions/authActions'
+} from './actions/authActions';
+
+export {
+    eventSubmit
+} from './actions/eventActions'

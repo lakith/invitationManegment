@@ -61,7 +61,7 @@ class NavBar extends React.Component {
             <Nav className="ml-auto" navbar>
               {signIn}
               <NavItem>
-                <NavLink><Link to="/my-event"><span style={{color:"#808080",fontSize:16}}>My events</span></Link></NavLink>
+                <NavLink><Link to="/test"><span style={{color:"#808080",fontSize:16}}>My events</span></Link></NavLink>
               </NavItem>
               <NavItem>
                 <NavLink><Link to="/event-categories"><span style={{color:"#808080",fontSize:16}}>Event categories</span></Link></NavLink>

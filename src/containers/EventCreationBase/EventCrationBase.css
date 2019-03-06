@@ -3,9 +3,28 @@
     display: "table-cell";
     vertical-align: "middle";
     border:"1px solid black";
-    padding-top: 20%
+    padding-top: 15%
 }
 
-.headerEvent{
-    padding-bottom: "100px";
+.required label {
+    font-weight: bold;
+}
+.required label:after {
+    color: #e32;
+    content: ' *';
+    display:inline;
+}
+
+.lblPadding label {
+    padding-bottom: 2%
+}
+
+.inputWidth {
+    width: 225% !important;
+}
+
+@media (max-width: 768px) {
+    .inputWidth{
+    width: 140% !important;
+   }
 }
