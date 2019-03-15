@@ -26,3 +26,10 @@ export{
     myEventEventId,
     myEventDefault,
 } from './actions/myEventActions'
+
+export {
+    oneEventStart,
+    oneEventSuccess,
+    oneEventSubmitError,
+    OneEventGetData
+} from './actions/OneEventActions'

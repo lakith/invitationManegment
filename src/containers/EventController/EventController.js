@@ -7,6 +7,8 @@ import EventFrontPage from '../../components/EventFrontPageDetails/EventFrontPag
 import {Route} from 'react-router-dom'
 import EventAdmins from '../../components/EventAdmins/EventAdmin';
 import EventOtherDetails from '../../components/EventOtherDetails/EventOtherDetails';
+import {connect} from 'react-redux'
+import * as oneEventActions from '../../store/index'
 
 class EventController extends Component {
 
@@ -222,4 +224,19 @@ class EventController extends Component {
     }
 }
 
-export default EventController;
+const mapDispatchToProps = (dispatch) => {
+    return{
+        onEventInit : (eventID,accessToken) => dispatch(oneEventActions.OneEventGetData(eventID,accessToken))
+    }
+}
+
+const mapStateToProps = (state) => { 
+    return{
+        eventStart : state.oneEvent.oneEventLoad,
+        eventFail : state.oneEvent.oneEventError, 
+        eventData : state.oneEvent.oneEventData,
+        accessToken : state.auth.accessToken
+    }
+ };
+
+export default connect(mapStateToProps,mapDispatchToProps)(EventController);
