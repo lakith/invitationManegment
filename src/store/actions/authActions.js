@@ -1,6 +1,5 @@
 import * as authActions from './actionTypes'
 import axios from '../../axios-base'
-import { resolve, reject } from 'q';
 
 export const authStart = () => {
     return{
@@ -43,10 +42,6 @@ export const authFail = (error) => {
 }
 
 export const logout = ()=> {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('expirationDate')
     return {
         type : authActions.AUTH_LOGOUT
     }
@@ -71,11 +66,6 @@ export const authLogin = (username,password) => {
         axios.post("staffUser/login",authData)
             .then(response => {
                 const expiratioDate = new Date(new Date().getTime()+response.data.expiration);
-                localStorage.setItem('accessToken',response.data.authToken.accessToken);
-                localStorage.setItem('refreshToken',response.data.authToken.refreshToken);
-                localStorage.setItem('expirationDate',expiratioDate);
-                localStorage.setItem('userId',response.data.userId)
-
                 let userData = {
                     userId: response.data.userId,
                     name : response.data.name,
@@ -94,17 +84,6 @@ export const authLogin = (username,password) => {
                 dispatch(authFail(error))
             })
     }
-}
-
-async function f() {
-
-    let promise = new Promise((resolve, reject) => {
-      setTimeout(() => resolve("done!"), 1000)
-    });
-    
-    let result = await promise; // wait till the promise resolves (*)
-
-    console.log(result); // "done!"
 }
 
 

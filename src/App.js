@@ -13,12 +13,13 @@ import EventCreationMain from './containers/EventCreationMain/EventCreationMain'
 import EventCreationBase from './containers/EventCreationBase/EventCreationBase';
 import Myevents from './containers/MyEvents/MyEvents';
 import Test from './containers/Test/Test';
+import EventController from './containers/EventController/EventController';
 
 class App extends Component {
   
   componentDidMount(){
     
-    this.props.onTryAutoSignUp();
+ //   this.props.onTryAutoSignUp();
   }
 
   render() {
@@ -31,6 +32,7 @@ class App extends Component {
         <Route path="/event-main" component={EventCreationMain} />
         <Route path="/event-base" component={EventCreationBase} />
         <Route path="/my-events" component={Myevents} />
+        <Route path="/event-controller/:id" component={EventController} />
         <Route path="/test" component={Test} />
         <Route path="/" exact component={Home} />
         <Redirect to="/" />

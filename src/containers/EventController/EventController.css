@@ -1,0 +1,21 @@
+.MenuStyle:active { 
+    background-color: teal !important;
+  }
+
+a.active { 
+    background-color: teal !important;
+}
+
+.MenuStyle {
+    direction:ltr !important;
+}
+
+.inlineShow {
+    display: inline !important;
+}
+
+.MenuScroll {
+    direction:rtl !important;
+    overflow:auto;
+    height: 600px;
+}

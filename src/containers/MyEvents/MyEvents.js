@@ -1,127 +1,94 @@
 import React,{Component} from 'react'
 import NavBar from '../../components/NavBar/navBar';
 import Footer from '../../components/Footer/footer';
-import { Header, Grid, Segment, Card, Image, Icon, Container, Label, Button, Sidebar, Menu } from 'semantic-ui-react';
-import axios from '../../axios-base';
+import { Header, Grid, Segment,  Image, Icon, Container, Label, Sidebar, Menu } from 'semantic-ui-react';
 import {connect} from 'react-redux'
 import welcome from '../../assessts/welcome.jpg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandHoldingHeart,faUmbrellaBeach,faAnchor,faAtom,faBaby,faHeadset,faOutdent } from '@fortawesome/free-solid-svg-icons'
 import MyEventBody from './MyEventBody/MyEventBody';
+import * as eventActions from '../../store/index'
 
 class Myevents extends Component {
     
     state={
-        // events:null,
-        // load:false,
-        // error:null,
         visible: false,
         isPaid : null,
         isPast : null,
-        eventTypeId : 0
+        eventTypeId : 0,
+        component:null
+
     }
 
-    // componentDidMount(){
-
-    // }
+    componentDidMount(){
+        console.log(this.props.accessToken);
+        this.props.OnMyEventDefault(this.props.accessToken);
+    }
 
     handleShowClick = () => this.setState({ visible: true })
     handleSidebarHide = () => this.setState({ visible: false })
 
-    // componentDidUpdate(){
-    //     let propsRedux = {...this.props}
-    //     let token = propsRedux.accessToken;
-
-    //     console.log(token);
-
-    //     axios({
-    //         method:'get',
-    //         url:'staffUser/my-events',
-    //         headers: {
-    //             Authorization: 'Bearer ' + token
-    //           }
-
-    //     }).then((response) => {
-    //         if(!this.state.events && this.state.events !==response.data){
-    //             this.setState({events:response.data})
-    //         }
-    //         console.log(this.state.events);
-    //     }).catch((err)=>{
-    //         this.setState({error:err.response.data.message});
-    //     })
-
-    // }
 
     setSelected = (type,value)=>{
         if(type==="peyment"){
             if(value==="free"){
-                this.setState({
-                    isPaid : "free",
-                    isPast : null,
-                    eventTypeId : 0
-                })
+
+                // this.setState({
+                //     isPaid : "free",
+                //     isPast : null,
+                //     eventTypeId : 0,
+                // })
+                
+                this.props.OnMyEventFree(this.props.accessToken,this.props.eventData);
+
             } else if(value ==="paid"){
-                this.setState({
-                    isPaid : "paid",
-                    isPast : null,
-                    eventTypeId : 0
-                })
+
+                // this.setState({
+                //     isPaid : "paid",
+                //     isPast : null,
+                //     eventTypeId : 0
+                // })
+
+                this.props.OnMyEventPaid(this.props.accessToken,this.props.eventData);
+                this.handleSidebarHide();
+
             }
         } else if(type === "time"){
             if(value==="old"){
-                this.setState({
-                    isPaid : null,
-                    isPast : "old",
-                    eventTypeId : 0
-                })
+
+                // this.setState({
+                //     isPaid : null,
+                //     isPast : "old",
+                //     eventTypeId : 0
+                // })
+
+                this.props.OnMyEventOld(this.props.accessToken,this.props.eventData);
+                this.handleSidebarHide();
+
             } else if(value==="new"){
-                this.setState({
-                    isPaid : null,
-                    isPast : "new",
-                    eventTypeId : 0
-                })
+                // this.setState({
+                //     isPaid : null,
+                //     isPast : "new",
+                //     eventTypeId : 0,
+                // })
+                this.props.OnMyEventNew(this.props.accessToken,this.props.eventData);
+                this.handleSidebarHide();
             }
         } else if(type === "event"){
-            this.setState({
-                isPaid : null,
-                isPast : null,
-                eventTypeId : value
-            })
+            //    this.setState({
+            //     isPaid : null,
+            //     isPast : null,
+            //     eventTypeId : value
+            // })
+
+            this.props.OnMyEventEventId(this.props.accessToken,value,this.props.eventData);
+            this.handleSidebarHide();
         }
     }
 
     render(){
     
         const { visible } = this.state
-
-        // let events = null;
-        // if(this.state.events){
-        // events =  this.state.events.map(event=>(
-        //     <Grid.Column>
-        //         <Card fluid>
-        //         <Image src={event.eventThumbnail} style={{height:220}} />
-        //         <Card.Content>
-        //         <Card.Header>{event.eventName}</Card.Header>
-        //         <Card.Meta>
-        //             <span className='date'>{event.startDate}</span>
-        //         </Card.Meta>
-        //         <Card.Description>
-        //             <strong>Event Place &nbsp;</strong>{event.eventPlace}
-        //             <br />
-        //             <strong>Event Hosted Url &nbsp;</strong>{event.eventHostedUrl}
-        //         </Card.Description>
-        //         </Card.Content>
-        //         <Card.Content extra>
-                
-        //         <a href>
-        //             <Icon name='user' />
-        //             {event.numberOfGuests} Guests
-        //         </a>
-        //         </Card.Content>
-        //     </Card>
-        // </Grid.Column>
-        // ))
-        // }
 
         return(
             <div>
@@ -234,12 +201,12 @@ class Myevents extends Component {
                     </center>
                     <br/>
                     <Grid container columns={3} doubling stackable style={{marginBottom:"2%",marginTop:"2%"}}>
-                        <MyEventBody 
-                            token={this.props.accessToken}
-                            isPaid={this.state.isPaid}
-                            isPast={this.state.isPast}
-                            eventTypeId={this.state.eventTypeId}
-                        />
+                       <MyEventBody 
+                            accessToken = {this.props.accessToken}
+                            myEventLoad = {this.props.myEventLoad}
+                            myEventError = {this.props.myEventError}
+                            eventData = {this.props.eventData}
+                       />
                     </Grid>
                     </Segment>
                     </Sidebar.Pusher>
@@ -251,9 +218,24 @@ class Myevents extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return{
-        accessToken: state.auth.accessToken
+const mapDispatchToProps = dispatch => {
+    return {
+        OnMyEventPaid : (token,currentData) => dispatch(eventActions.myEventPaid(token,currentData)),
+        OnMyEventFree : (token,currentData) => dispatch(eventActions.myEventFree(token,currentData)),
+        OnMyEventOld : (token,currentData) => dispatch(eventActions.myEventOld(token,currentData)),
+        OnMyEventNew : (token,currentData) => dispatch(eventActions.myEventNew(token,currentData)),
+        OnMyEventEventId : (token,eventTypeId,currentData) => dispatch(eventActions.myEventEventId(token,eventTypeId,currentData)),
+        OnMyEventDefault : (token) => dispatch(eventActions.myEventDefault(token))
     }
 }
-export default connect(mapStateToProps)(Myevents);
+
+const mapStateToProps = state => {
+    return{
+        accessToken: state.auth.accessToken,
+        myEventLoad:state.myEvent.myEventLoad,
+        myEventError:state.myEvent.myEventError,
+        eventData:state.myEvent.myEventData
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Myevents);

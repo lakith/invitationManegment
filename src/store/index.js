@@ -14,3 +14,15 @@ export {
 export {
     eventSubmit
 } from './actions/eventActions'
+
+export{
+    myEvenFail,
+    myEventSuccess,
+    myEventStart,
+    myEventPaid,
+    myEventFree,
+    myEventOld,
+    myEventNew,
+    myEventEventId,
+    myEventDefault,
+} from './actions/myEventActions'

@@ -15,4 +15,7 @@ export const EVENT_SUCCESS = "EVENT_SUCCESS";
 export const EVENT_FAIL = "EVENT_FAIL";
 export const EVENT_SUBMIT = "EVENT_SUBMIT";
 
-
+export const MY_EVENT_START = "MY_EVENT_START";
+export const MY_EVENT_SUCCESS = "MY_EVENT_SUCCESS";
+export const MY_EVENT_FAIL = "MY_EVENT_FAIL";
+export const MY_EVENT_SUBMIT = "MY_EVENT_SUBMIT";
