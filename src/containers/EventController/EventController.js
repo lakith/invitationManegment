@@ -9,6 +9,7 @@ import EventAdmins from '../../components/EventAdmins/EventAdmin';
 import EventOtherDetails from '../../components/EventOtherDetails/EventOtherDetails';
 import {connect} from 'react-redux'
 import * as oneEventActions from '../../store/index'
+import EventForm from '../../components/EventForm/EventForm';
 
 class EventController extends Component {
 
@@ -24,6 +25,9 @@ class EventController extends Component {
         }
         if(id === 3 ){
             this.redirectFrontPageEdit()
+        }
+        if(id === 4 ){
+            this.redirectFormControll()
         }
         if(id === 5){
             this.redirectAdminControll()
@@ -42,9 +46,18 @@ class EventController extends Component {
         this.props.history.replace('/event-controller/'+this.props.match.params.id+"/update-event-admins");
     }
 
+    redirectFormControll = () => {
+        this.props.history.replace('/event-controller/'+this.props.match.params.id+"/event-form-config");
+    }
+
     componentDidMount(){
-        console.log("asdsad");
-        console.log(this.props.match.params.id);
+        if(this.props.eventData){
+            if(this.props.eventData.eventId !== this.props.match.params.id){
+                this.props.onEventInit(this.props.match.params.id,this.props.accessToken);
+            }
+        } else {
+            this.props.onEventInit(this.props.match.params.id,this.props.accessToken);
+        }
     }
 
 
@@ -214,7 +227,8 @@ class EventController extends Component {
                                     <Route path={this.props.match.path +"/update-front-page"} component={EventFrontPage}/>
                                     <Route path={this.props.match.path +"/update-event-admins"} component={EventAdmins} />
                                     <Route path={this.props.match.path +"/update-event-other-details"} component={EventOtherDetails} />
-                                
+                                    <Route path={this.props.match.path +"/event-form-config"} component={EventForm} />
+
                             </Container>
                     </Grid.Column>
                 </Grid>
