@@ -14,6 +14,9 @@ import EventCreationBase from './containers/EventCreationBase/EventCreationBase'
 import Myevents from './containers/MyEvents/MyEvents';
 import Test from './containers/Test/Test';
 import EventController from './containers/EventController/EventController';
+import HomeBase from './containers/HomeBase/HomeBase';
+import UserProfile from './containers/UserProfile/UserProfile';
+import UserSearch from './containers/UserSearch/UserSearch';
 
 class App extends Component {
   
@@ -23,21 +26,44 @@ class App extends Component {
   }
 
   render() {
+    let routes = null;
+    if(this.props.isAuthenticated){
+      routes = (
+        <Switch>
+          <Route path="/register" component={Register}/>
+          <Route path="/login" component={Login} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/event-main" component={EventCreationMain} />
+          <Route path="/event-base" component={EventCreationBase} />
+          <Route path="/my-events" component={Myevents} />
+          <Route path="/event-controller/:id" component={EventController} />
+          <Route path="/test" component={Test} />
+          <Route path="/profile" component={UserProfile} />
+          <Route path="/user-search" component={UserSearch} />
+          <Route path="/" exact component={Home} />
+          <Redirect to="/" />
+        </Switch>
+      )
+    } else {
+      routes = (
+        <Switch>
+          <Route path="/register" component={Register}/>
+          <Route path="/login" component={Login} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/event-main" component={EventCreationMain} />
+          <Route path="/event-base" component={EventCreationBase} />
+          <Route path="/my-events" component={Myevents} />
+          <Route path="/event-controller/:id" component={EventController} />
+          <Route path="/test" component={Test} />
+          <Route path="/profile" component={UserProfile} />
+          <Route path="/user-search" component={UserSearch} />
+          <Route path="/" exact component={HomeBase} />
+          <Redirect to="/" />
+        </Switch>
+      )
+    }
     
-    let routes = (
-      <Switch>
-        <Route path="/register" component={Register}/>
-        <Route path="/login" component={Login} />
-        <Route path="/logout" component={Logout} />
-        <Route path="/event-main" component={EventCreationMain} />
-        <Route path="/event-base" component={EventCreationBase} />
-        <Route path="/my-events" component={Myevents} />
-        <Route path="/event-controller/:id" component={EventController} />
-        <Route path="/test" component={Test} />
-        <Route path="/" exact component={Home} />
-        <Redirect to="/" />
-      </Switch>
-    )
+
 
 
     return (

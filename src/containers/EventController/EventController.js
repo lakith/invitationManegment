@@ -10,6 +10,8 @@ import EventOtherDetails from '../../components/EventOtherDetails/EventOtherDeta
 import {connect} from 'react-redux'
 import * as oneEventActions from '../../store/index'
 import EventForm from '../../components/EventForm/EventForm';
+import EventSpecialGuest from '../../components/EventSpeicialGuest/EventSpecialGuest';
+import EventGeneralGuest from '../../components/EventGeneralGuest/EventgeneralGuest';
 
 class EventController extends Component {
 
@@ -31,7 +33,21 @@ class EventController extends Component {
         }
         if(id === 5){
             this.redirectAdminControll()
+        }
+        if(id === 6){
+            this.redirectSpecialGuestEdit()
+        }
+        if(id === 7){
+            this.redirectGeneralGuestEdit()
         } 
+    }
+
+    redirectGeneralGuestEdit = () => {
+        this.props.history.replace('/event-controller/'+this.props.match.params.id+"/update-event-general-guest");
+    }
+
+    redirectSpecialGuestEdit = () => {
+        this.props.history.replace('/event-controller/'+this.props.match.params.id+"/update-event-special-guest");
     }
 
     redirectOtherDetailsEdit = () => {
@@ -131,9 +147,21 @@ class EventController extends Component {
                 <Header as='h2'>
                 <Icon name='podcast' />
                 <Header.Content>
-                    Event Category Details 
+                    Event Special Guests 
                     <Header.Subheader>
-                        Manege Event Details 
+                        Manege Event Guests 
+                    </Header.Subheader>
+                </Header.Content>
+            </Header>
+          )
+        } else if(this.state.headerId === 7){
+            headerContent = (
+                <Header as='h2'>
+                <Icon name='user outline' />
+                <Header.Content>
+                    Event General Guests 
+                    <Header.Subheader>
+                        Manege Event Guests 
                     </Header.Subheader>
                 </Header.Content>
             </Header>
@@ -213,7 +241,18 @@ class EventController extends Component {
                             >
                                      <center><Icon size='big' color='orange' name='podcast'/></center>
                                      <br />
-                                     <strong>Event Category Details</strong>
+                                     <strong>Event Special Guests</strong>
+                            </Menu.Item>
+                            <Menu.Item
+                            className="MenuStyle"
+                            name='gengust'
+                            active={activeItem === 'gengust'}
+                            onClick={()=>this.handleItemClick(this,"gengust",7)}
+                            style={{textAlign:"center",alignSelf: 'stretch'}}
+                            >
+                                     <center><Icon size='big' color='orange' name='user outline'/></center>
+                                     <br />
+                                     <strong>Event General Guests</strong>
                             </Menu.Item>
                         </Menu>
                         </Segment>
@@ -223,12 +262,12 @@ class EventController extends Component {
                                 <div style={{paddingTop:"1.5%",paddingBottom:"1.5%"}}>
                                 {headerContent}
                                 </div>
-                                
                                     <Route path={this.props.match.path +"/update-front-page"} component={EventFrontPage}/>
                                     <Route path={this.props.match.path +"/update-event-admins"} component={EventAdmins} />
                                     <Route path={this.props.match.path +"/update-event-other-details"} component={EventOtherDetails} />
                                     <Route path={this.props.match.path +"/event-form-config"} component={EventForm} />
-
+                                    <Route path={this.props.match.path +"/update-event-special-guest"} component={EventSpecialGuest} />
+                                    <Route path={this.props.match.path +"/update-event-general-guest"} component={EventGeneralGuest} />
                             </Container>
                     </Grid.Column>
                 </Grid>
