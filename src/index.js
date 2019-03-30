@@ -15,6 +15,14 @@ import storage from 'redux-persist/lib/storage'
 import { PersistGate } from 'redux-persist/integration/react'
 import Spinner from './components/Spinner';
 import OneEventReducer from './store/reducer/oneEventReducer'
+import WebFont from 'webfontloader';
+import AllEevntReducer from './store/reducer/AllEventReducer'
+
+WebFont.load({
+    google: {
+      families: ['Raleway', 'sans-serif']
+    }
+  });
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
@@ -22,7 +30,8 @@ const rootReducer = combineReducers({
     auth : AuthReducer,
     event : EventReducer,
     myEvent : MyEventReducer,
-    oneEvent : OneEventReducer
+    oneEvent : OneEventReducer,
+    allEvent : AllEevntReducer
 })
 
 

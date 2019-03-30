@@ -140,7 +140,7 @@ class Myevents extends Component {
                         <FontAwesomeIcon icon={faAtom} size="2x" />
                         <br />
                         <br />
-                        Tec-meetup
+                        Baby Shower
                         </Menu.Item>
                         <Menu.Item as='a' onClick={()=>this.setSelected("event",7)}>
                         <FontAwesomeIcon icon={faHeadset} size="2x" />

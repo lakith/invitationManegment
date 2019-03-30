@@ -152,7 +152,6 @@ class UserSearch extends Component {
             </React.Fragment>
         )
     }
-
 }
 
 export default UserSearch;

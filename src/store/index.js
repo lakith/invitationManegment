@@ -27,6 +27,18 @@ export{
     myEventDefault,
 } from './actions/myEventActions'
 
+export{
+    allEvenFail,
+    allEventSuccess,
+    allEventStart,
+    allEventPaid,
+    allEventFree,
+    allEventPrivate,
+    allEventPublic,
+    allEventEventId,
+    allEventDefault
+} from './actions/AlleventActions'
+
 export {
     oneEventStart,
     oneEventSuccess,
