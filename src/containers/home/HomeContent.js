@@ -1,84 +1,96 @@
 import React,{Component} from 'react';
-import {  Card, Image, Icon, Grid } from 'semantic-ui-react';
+import {  Card, Image, Icon, Grid, Message } from 'semantic-ui-react';
+
 
 class HomeContent extends Component {
-
     render(){
-        return(
-            <React.Fragment>
-                 <Grid.Column >
-                        <Card fluid>
-                        <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' style={{height:220}} />
-                        <Card.Content>
-                        <Card.Header>Matthew</Card.Header>
-                        <Card.Meta>
-                            <span className='date'>Joined in 2015</span>
-                        </Card.Meta>
-                        <Card.Description>
-                            <strong>Event Place &nbsp;</strong>Nashville
-                            <br />
-                            <strong>Event Hosted Url &nbsp;</strong>google.com
-                        </Card.Description>
-                        </Card.Content>
-                        <Card.Content extra>
-                        
-                        <a href>
-                            <Icon name='user' />
-                            50 Guests
-                        </a>
-                        </Card.Content>
-                    </Card>
-                </Grid.Column>
+        let transEvents = null;
+        if(this.props.eventData){
+                transEvents =  this.props.eventData.map(event=>(
+                   
+                        <Grid.Column key={event.eventId}>
+                            <Card fluid style={{width:"90%"}}>
+                            <Image src={event.eventThumbnail} style={{height:180}} />
+                            <Card.Content>
+                            <Card.Header>{event.eventName}</Card.Header>
+                            <Card.Meta>
+                                <span className='date'>{event.startDate}</span>
+                            </Card.Meta>
+                            <Card.Description>
+                                <strong>Event Place &nbsp;</strong>{event.eventPlace}
+                                <br />
+                                <strong>Event Hosted Url &nbsp;</strong>{event.eventHostedUrl}
+                            </Card.Description>
+                            </Card.Content>
+                            <Card.Content extra>
+                            
+                            <a href>
+                                <Icon name='user' />
+                                {event.numberOfGuests} Guests
+                            </a>
+                            </Card.Content>
+                        </Card>
+                    </Grid.Column>
+               
+                ))
+            }
+        
+    
+           
+            let displayError = null
+            if(this.props.myEventError){
+               displayError = ( 
+                <>
+                <Grid.Column ></Grid.Column>
                 <Grid.Column >
-                        <Card fluid>
-                        <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' style={{height:220}} />
-                        <Card.Content>
-                        <Card.Header>Matthew</Card.Header>
-                        <Card.Meta>
-                            <span className='date'>Joined in 2015</span>
-                        </Card.Meta>
-                        <Card.Description>
-                            <strong>Event Place &nbsp;</strong>Nashville
-                            <br />
-                            <strong>Event Hosted Url &nbsp;</strong>google.com
-                        </Card.Description>
-                        </Card.Content>
-                        <Card.Content extra>
-                        
-                        <a href>
-                            <Icon name='user' />
-                            50 Guests
-                        </a>
-                        </Card.Content>
-                    </Card>
+                    <Message
+                        error
+                        header='Something Went Wrong With The Connection'
+                        list={[
+                        'Plese make sure that you have been logged in with the correct procedure.',
+                        'Check Your Internet Connectivty.',
+                        ]}
+                    />
                 </Grid.Column>
-                <Grid.Column >
-                        <Card fluid>
-                        <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' style={{height:220}} />
-                        <Card.Content>
-                        <Card.Header>Matthew</Card.Header>
-                        <Card.Meta>
-                            <span className='date'>Joined in 2015</span>
-                        </Card.Meta>
-                        <Card.Description>
-                            <strong>Event Place &nbsp;</strong>Nashville
-                            <br />
-                            <strong>Event Hosted Url &nbsp;</strong>google.com
-                        </Card.Description>
-                        </Card.Content>
-                        <Card.Content extra>
-                        
-                        <a href>
-                            <Icon name='user' />
-                            50 Guests
-                        </a>
-                        </Card.Content>
-                    </Card>
-                </Grid.Column>
-            </React.Fragment>
-        )
-    }
-
+                <Grid.Column ></Grid.Column>
+                </>
+               )
+            }
+        
+            let noContent = null;
+            if(!this.props.eventData) {
+                noContent = (
+                    <>
+                    <Grid.Column ></Grid.Column>
+                    <Grid.Column >
+                        <Message warning>
+                            <Message.Header>There Is No Content To Show!</Message.Header>
+                                <p>Visit Our Event Registration Page To Add Events.</p>
+                                    <Icon style={{textAligh:"center"}} name='settings' />
+                        </Message>
+                    </Grid.Column>
+                    <Grid.Column ></Grid.Column>
+                    </>
+                )
+            }
+    
+            let content = null;
+            if(transEvents){
+                content = transEvents
+            } else if(noContent) {
+                content = noContent;
+            } else if (displayError) {
+                content = displayError
+            } else {
+                content = displayError
+            }
+    
+            return (
+                <React.Fragment>
+                    {content}
+                </React.Fragment>
+            )
+        }
 }
 
 export default HomeContent;

@@ -17,6 +17,8 @@ import EventController from './containers/EventController/EventController';
 import HomeBase from './containers/HomeBase/HomeBase';
 import UserProfile from './containers/UserProfile/UserProfile';
 import UserSearch from './containers/UserSearch/UserSearch';
+import EventView from './containers/EventView/EventView';
+import EventViewOriginal from './containers/EventView/EventViewOriginal';
 
 class App extends Component {
   
@@ -40,6 +42,8 @@ class App extends Component {
           <Route path="/test" component={Test} />
           <Route path="/profile" component={UserProfile} />
           <Route path="/user-search" component={UserSearch} />
+          <Route path="/event-view" component={EventView} />
+          <Route path="/view-event" component={EventViewOriginal} />
           <Route path="/" exact component={Home} />
           <Redirect to="/" />
         </Switch>

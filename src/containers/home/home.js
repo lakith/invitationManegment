@@ -8,23 +8,101 @@ import upcomming from '../../assessts/upcoming.jpg'
 import HomeContent from './HomeContent';
 import {connect} from 'react-redux';
 import * as allEventActions from '../../store/index'
-
+import {Launcher} from 'react-chat-window'
+import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 class Home extends Component {
 
+    constructor() {
+        super();
+        this.state = {
+          messageList: []
+        };
+      }
+     
+      _onMessageWasSent(message) {
+        this.setState({
+          messageList: [...this.state.messageList, message]
+        })
+      }
+     
+      _sendMessage(text) {
+        if (text.length > 0) {
+          this.setState({
+            messageList: [...this.state.messageList, {
+              author: 'them',
+              type: 'text',
+              data: { text }
+            }]
+          })
+        }
+      }
+
+    componentDidMount(){
+        this.props.OnAllEventDefault();
+    }
+
     selectHandler = (selector) =>{
         console.log(selector);
+
+        if(selector === 1){
+            this.eventByEventType(1);
+        } else if(selector === 2){
+            this.eventByEventType(2);
+        } else if(selector === 3){
+            this.eventByEventType(3);
+        } else if(selector === 4){
+            this.eventByEventType(4);
+        } else if(selector === 5){
+            this.eventByEventType(5);
+        } else if(selector === 6){
+            this.eventByEventType(6);
+        } else if(selector === 7){
+            this.eventByEventType(7);
+        } else if(selector === 8){
+            this.freeEventData()
+        } else if(selector === 9){
+            this.paidEventData()
+        } else if(selector === 10){
+            this.privateEventData()
+        } else if(selector === 11) {
+            this.publicEventData();
+        }
+     } 
+    
+
+    publicEventData = () => {
+        this.props.OnAllEventPublic(this.props.alleventData);
+    }
+
+    privateEventData= () => {
+        this.props.OnAllEventPrivate(this.props.alleventData);
+    }
+
+    paidEventData= () => {
+        this.props.OnAllEventPaid(this.props.alleventData);
+    }
+
+    freeEventData = () => {
+        this.props.OnAllEventFree(this.props.alleventData);
+    }
+
+    eventByEventType = (eventTypeId) => {
+        console.log(eventTypeId)
+        this.props.OnAllEventByEventType(eventTypeId,this.props.alleventData)
     }
 
     render(){
         return(
             <div>
+                
                 <NavBar /> 
                  <Grid className="hideevent" columns={1}>
                         <Container fluid>
                             <Image fluid src={main} />
                         </Container>
                  </Grid>
+
                  <Grid columns={3} style={{marginTop:"2%",marginBottom:"2%"}}>
                     <Grid.Column width={1}>
                     </Grid.Column>
@@ -55,6 +133,18 @@ class Home extends Component {
                     <Grid.Column  width={1}>
                     </Grid.Column>
                  </Grid>
+                 <Grid columns={3} style={{marginTop:"2%",marginBottom:"2%"}}>
+                    <Grid.Column width={1}>
+                    </Grid.Column>
+                    <Grid.Column width={14}>
+                        <Container fluid style={{textAlign:"center",marginTop:"3%"}} >
+                            <font size="5" ><Header size="huge" style={{fontFamily:"'Raleway', 'sans-serif'",fontWeight:300}} >Check Latest Events</Header></font>
+                            <h3 style={{fontFamily:"'Raleway', 'sans-serif'",color:"#858484",fontWeight:300}}>Here is a list of the latest events. Register and RSVP now to secure your place</h3>
+                        </Container>
+                    </Grid.Column>
+                    <Grid.Column  width={1}>
+                    </Grid.Column>
+                 </Grid>
                  <Grid columns={1} style={{marginTop:"2%",marginBottom:"2%"}}>
                    
                     <Grid.Column width={16}>
@@ -69,26 +159,44 @@ class Home extends Component {
                                 <Dropdown.Item onClick={()=>this.selectHandler(2)}  label={{ color: 'blue', empty: true, circular: true }} text='Wedding' />
                                 <Dropdown.Item onClick={()=>this.selectHandler(3)}  label={{ color: 'teal', empty: true, circular: true }} text='Holiday Party' />
                                 <Dropdown.Item onClick={()=>this.selectHandler(4)}  label={{ color: 'green', empty: true, circular: true }} text='Baby Shower' />
-                                <Dropdown.Item onClick={()=>this.selectHandler(5)}  label={{ color: 'pink', empty: true, circular: true }} text='Show or Performance' />
-                                <Dropdown.Item onClick={()=>this.selectHandler(6)}  label={{ color: 'violet', empty: true, circular: true }} text='Other' />
-                                <Dropdown.Item onClick={()=>this.selectHandler(7)}  label={{ color: 'brown', empty: true, circular: true }} text='Free Events' />
-                                <Dropdown.Item onClick={()=>this.selectHandler(8)}  label={{ color: 'yellow', empty: true, circular: true }} text='Paid Events' />
-                                <Dropdown.Item onClick={()=>this.selectHandler(9)}  label={{ color: 'orange', empty: true, circular: true }} text='Private Events' />
-                                <Dropdown.Item onClick={()=>this.selectHandler(10)}  label={{ color: 'grey', empty: true, circular: true }} text='Public Events' />
+                                <Dropdown.Item onClick={()=>this.selectHandler(5)}  label={{ color: 'teal', empty: true, circular: true }} text='Coporate Party' />
+                                <Dropdown.Item onClick={()=>this.selectHandler(6)}  label={{ color: 'pink', empty: true, circular: true }} text='Show or Performance' />
+                                <Dropdown.Item onClick={()=>this.selectHandler(7)}  label={{ color: 'violet', empty: true, circular: true }} text='Other' />
+                                <Dropdown.Item onClick={()=>this.selectHandler(8)}  label={{ color: 'brown', empty: true, circular: true }} text='Free Events' />
+                                <Dropdown.Item onClick={()=>this.selectHandler(9)}  label={{ color: 'yellow', empty: true, circular: true }} text='Paid Events' />
+                                <Dropdown.Item onClick={()=>this.selectHandler(10)}  label={{ color: 'orange', empty: true, circular: true }} text='Private Events' />
+                                <Dropdown.Item onClick={()=>this.selectHandler(11)}  label={{ color: 'grey', empty: true, circular: true }} text='Public Events' />
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
                     </Grid.Column>
                  </Grid>
                  <Grid container columns={3} doubling stackable style={{marginBottom:"2%",marginTop:"2%"}}>
-                     <HomeContent />
-
+                   
+                     <HomeContent 
+                        accessToken = {this.props.accessToken}
+                        myEventLoad = {this.props.allEventLoad}
+                        myEventError = {this.props.allEventError}
+                        eventData = {this.props.alleventData}
+                     />
+                    
+                    <Launcher
+                        agentProfile={{
+                        teamName: 'react-chat-window',
+                        imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
+                        }}
+                        onMessageWasSent={this._onMessageWasSent.bind(this)}
+                        messageList={this.state.messageList}
+                        showEmoji
+                    />
+                    
                 </Grid>
                  <Grid columns={1} style={{marginTop:"2%",marginBottom:"2%"}}>
                         <Container fluid>
                             <Image fluid src={mainMiddle} />
                         </Container>
                  </Grid>
+                 
                 <Footer />
             </div>
         )

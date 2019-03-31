@@ -20,7 +20,10 @@ import AllEevntReducer from './store/reducer/AllEventReducer'
 
 WebFont.load({
     google: {
-      families: ['Raleway', 'sans-serif']
+      families: [
+                 'Raleway', 'sans-serif',
+                 'Open Sans','sans-serif'
+                ]
     }
   });
 

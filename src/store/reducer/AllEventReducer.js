@@ -15,7 +15,7 @@ const allEventStart = (state,action)=>{
 
 const allEventFail = (state,action)=>{
     return updatedObject (state,{
-        allEventLoad:false,allEventError:true
+        allEventLoad:false,allEventError:true,allEventData:null
     });
 }
 

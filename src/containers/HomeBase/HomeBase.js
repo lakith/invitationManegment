@@ -13,8 +13,7 @@ import middle1 from '../../assessts/middle1.PNG'
 import middle2 from '../../assessts/middle2.PNG'
 import middle3 from '../../assessts/middle3.PNG'
 import midImage from '../../assessts/midImage.PNG'
-
-
+import MessengerCustomerChat from 'react-messenger-customer-chat';
 class HomeBase extends Component {
 
     render() {
@@ -52,6 +51,10 @@ class HomeBase extends Component {
                             </Container>
                             </center>
                         </GridColumn>
+                        <MessengerCustomerChat
+                            pageId="108264153116843"
+                            appId="2277673909141872"
+                        />
                     </Grid>
 
                     <Grid columns={3} stackable>
