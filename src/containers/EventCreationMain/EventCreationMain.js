@@ -162,15 +162,13 @@ class EventCreationMain extends Component {
                 <NavBar />
                 <Container fluid style={{padding:0,paddingBottom:"1%"}}>
                     <Grid>
-                        <Grid.Row columns={1}>
-                            <Grid.Column computer={16} mobile={16} tablet={16}>
-                                <Segment style={{padding:0,marginRight:"-10%"}}>
-                                    <Image src={Event} />
-                                </Segment>
-                            </Grid.Column>
-                        </Grid.Row>
+                       <center> <Grid.Column className="mobileEventFix" computer={16} mobile={15} tablet={15}>
+                            <Segment  style={{padding:0}}>
+                                <Image src={Event} />
+                            </Segment>
+                        </Grid.Column></center>
                         <Grid.Row columns={2} style={{padding:0}}>
-                            <Grid.Column computer={10} mobile={16} tablet={12} style={{paddingBottom:"2%",paddingTop:"2%",paddingLeft:"4%"}}>
+                            <Grid.Column computer={10} mobile={15} tablet={12} style={{paddingBottom:"2%",paddingTop:"2%",paddingLeft:"4%"}}>
                                 <div style={{backgroundColor:"#FDFDFD"}}>
                                 <Image.Group size='small'>
                                     <Image  src={Baby} />
@@ -181,12 +179,11 @@ class EventCreationMain extends Component {
                                 </Image.Group>
                                 </div>
                             </Grid.Column>
-                            <Grid.Column computer={6} mobile={16} tablet={4} style={{paddingBottom:"4%",paddingTop:"3%"}}>
+                            <Grid.Column computer={6} mobile={15} tablet={4} style={{paddingBottom:"4%",paddingTop:"4.5%"}}>
                                 <Grid>
-                                    <Grid.Row columns={2} style={{marginTop:"5%",backgroundColor:"#FDFDFD"}}>
-                                        <Grid.Column>
-                                            <div style={{paddingBottom:"5%",paddingLeft:"12%"}}>
-                                                <Statistic.Group>
+                                        <Grid.Column computer={8} mobile={15} tablet={4} >
+                                        <center><div className="mobileMarginFix" style={{paddingBottom:"5%",paddingLeft:"12%"}}>
+                                            <Statistic.Group>
                                                     <Statistic>
                                                         <Statistic.Value>22</Statistic.Value>
                                                         <Statistic.Label>Events</Statistic.Label>
@@ -197,17 +194,17 @@ class EventCreationMain extends Component {
                                                         <Statistic.Label>Members</Statistic.Label>
                                                     </Statistic>
                                                 </Statistic.Group>
-                                            </div>
+                                            </div></center>
                                         </Grid.Column>
-                                        <Grid.Column style={{paddingTop:"3%"}} >
-                                            <div style={{margin:"auto"}}>    
-                                            <Button onClick={this.show('blurring')} icon color='purple'>
+                                        <Grid.Column computer={8} mobile={15} style={{paddingTop:"3%"}} >
+                                            <center><div className="mobileMarginFix" style={{margin:"auto"}}>    
+                                            <Button className="mobileMarginFix" style={{marginTop:10,marginBottom:10}} onClick={this.show('blurring')} icon color='purple'>
                                                 <Icon name='glass martini' />
                                                 &nbsp; Create Your Event &nbsp;
                                             </Button>
-                                            </div>
+                                            </div></center>
                                         </Grid.Column>
-                                    </Grid.Row>
+                                    
                                 </Grid>     
                             </Grid.Column>
                         </Grid.Row>

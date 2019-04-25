@@ -1,0 +1,10 @@
+
+.navSign{
+ display: inline;
+}
+
+@media (max-width: 768px) {
+    .navStyle{
+    padding-top: 10px !important;
+   }
+}

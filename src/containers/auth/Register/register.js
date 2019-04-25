@@ -7,6 +7,9 @@ import NavBar from '../../../components/NavBar/navBar';
 import Footer from '../../../components/Footer/footer';
 import Logo from '../../../assessts/rsvpster-logo (1).png'
 import Party from '../../../assessts/party2.jpg'
+import Image1 from '../../../assessts/drink.jpg'
+import Image2 from '../../../assessts/drink2.jpg'
+import Image3 from '../../../assessts/drink3.jpg'
 
 class Register extends Component {
 
@@ -146,7 +149,7 @@ class Register extends Component {
                                         <div style={{padding:10,margin:"auto",display:"block",paddingLeft:'35%'}}>
                                             <Reveal animated='rotate'>
                                                 <Reveal.Content visible>
-                                                <Image circular size='small' src='https://react.semantic-ui.com/images/wireframe/square-image.png' />
+                                                <Image circular size='small' src={Image1} />
                                                 </Reveal.Content>
                                                 <Reveal.Content hidden>
                                                 <Image circular size='small' src='https://react.semantic-ui.com/images/avatar/large/stevie.jpg' />
@@ -156,7 +159,7 @@ class Register extends Component {
                                         <div style={{padding:10,margin:"auto",display:"block",paddingLeft:'35%'}}>
                                             <Reveal animated='rotate'>
                                                 <Reveal.Content visible>
-                                                <Image circular size='small' src='https://react.semantic-ui.com/images/wireframe/square-image.png' />
+                                                <Image circular size='small' src={Image2} />
                                                 </Reveal.Content>
                                                 <Reveal.Content hidden>
                                                 <Image circular size='small' src='https://react.semantic-ui.com/images/avatar/large/stevie.jpg' />
@@ -166,7 +169,7 @@ class Register extends Component {
                                         <div style={{padding:10,margin:"auto",display:"block",paddingLeft:'35%'}}>
                                             <Reveal animated='rotate'>
                                                 <Reveal.Content visible>
-                                                <Image circular size='small' src='https://react.semantic-ui.com/images/wireframe/square-image.png' />
+                                                <Image circular size='small' src={Image3} />
                                                 </Reveal.Content>
                                                 <Reveal.Content hidden>
                                                 <Image circular size='small' src='https://react.semantic-ui.com/images/avatar/large/stevie.jpg' />

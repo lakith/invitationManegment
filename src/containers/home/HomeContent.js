@@ -1,16 +1,21 @@
 import React,{Component} from 'react';
 import {  Card, Image, Icon, Grid, Message } from 'semantic-ui-react';
+import {Link} from 'react-router-dom'
 
 
 class HomeContent extends Component {
     render(){
         let transEvents = null;
+        let eventUrl = "/view-event?event=";
         if(this.props.eventData){
                 transEvents =  this.props.eventData.map(event=>(
-                   
                         <Grid.Column key={event.eventId}>
-                            <Card fluid style={{width:"90%"}}>
-                            <Image src={event.eventThumbnail} style={{height:180}} />
+                            <Link to={"/view-event?event="+event.eventId}>
+                            <Card link fluid style={{width:"90%"}}>
+                            <Image 
+                            src={event.eventThumbnail}
+                            label={{ as: 'a', color: event.closed?"red":"green", content: event.closed?"closed":"pending", icon: event.closed?"window close outline":"rss", ribbon: true }}
+                            style={{height:180}} />
                             <Card.Content>
                             <Card.Header>{event.eventName}</Card.Header>
                             <Card.Meta>
@@ -29,7 +34,7 @@ class HomeContent extends Component {
                                 {event.numberOfGuests} Guests
                             </a>
                             </Card.Content>
-                        </Card>
+                        </Card></Link>
                     </Grid.Column>
                
                 ))

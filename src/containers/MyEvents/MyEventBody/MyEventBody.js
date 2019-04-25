@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import { Grid, Card, Image, Icon, Message } from 'semantic-ui-react';
+import {Link} from 'react-router-dom'
 class MyEventBody extends Component {
     
     render(){
@@ -8,6 +9,7 @@ class MyEventBody extends Component {
             transEvents =  this.props.eventData.map(event=>(
                
                     <Grid.Column key={event.eventId}>
+                        <Link to={`event-controller/${event.eventId}/update-front-page`}>
                         <Card fluid>
                         <Image src={event.eventThumbnail} style={{height:220}} />
                         <Card.Content>
@@ -29,6 +31,7 @@ class MyEventBody extends Component {
                         </a>
                         </Card.Content>
                     </Card>
+                    </Link>
                 </Grid.Column>
            
             ))

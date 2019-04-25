@@ -10,6 +10,7 @@ import mime from 'mime-types'
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import {connect} from 'react-redux'
 import * as eventActions from '../../store/index'
+import {Redirect} from 'react-router-dom'
 
 class EventCreationBase extends Component {
 
@@ -163,10 +164,16 @@ class EventCreationBase extends Component {
             fieldClassPlace = "lblPadding error"
         }
 
+        let ridirect = null
+        if(this.props.eventSuccess){
+            ridirect =  <Redirect to="/my-events" />
+        }
+
         return(
             <React.Fragment>
                 <NavBar />
                         <div>
+                        {ridirect}
                         <Modal
                             open={open}
                             closeOnEscape={closeOnEscape}
@@ -259,7 +266,7 @@ class EventCreationBase extends Component {
                                 </div>
                                 <label  style={{paddingBottom:"2%"}} ><strong>Event Hosted url</strong></label>
                                 <Form.Input size="medium"  onChange={(event)=>this.handleChange(event,3)} value={this.state.eventHostedUrl}  fluid name="hosted"  placeholder="Event Hosted url" type="text" />
-                                <Button color='violet' fluid><strong>Submit your event data</strong></Button>
+                                <Button loading={this.props.eventLoad} color='violet' fluid><strong>Submit your event data</strong></Button>
                             </Form>
                             </Container>
                         </div>
@@ -276,7 +283,10 @@ class EventCreationBase extends Component {
 }
 const mapStateToProps = state => {
     return{
-        accessToken: state.auth.accessToken
+        accessToken: state.auth.accessToken,
+        eventErrors: state.event.eventErrors,
+        eventLoad: state.event.eventLoad,
+        eventSuccess: state.event.eventSuccess
     }
 }
 

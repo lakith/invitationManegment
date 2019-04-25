@@ -14,6 +14,7 @@ import middle2 from '../../assessts/middle2.PNG'
 import middle3 from '../../assessts/middle3.PNG'
 import midImage from '../../assessts/midImage.PNG'
 import MessengerCustomerChat from 'react-messenger-customer-chat';
+import {Link} from 'react-router-dom'
 class HomeBase extends Component {
 
     render() {
@@ -32,9 +33,11 @@ class HomeBase extends Component {
                         </GridColumn>
                         <GridColumn width="5">
                             <center>
-                            <Container >
+                            <Link to="/login">
+                            <Container>
                                 <Image src={content1} />
                             </Container>
+                            </Link>
                             </center>
                         </GridColumn>
                         <GridColumn width="5">

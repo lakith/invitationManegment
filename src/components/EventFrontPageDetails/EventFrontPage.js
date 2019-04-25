@@ -154,7 +154,7 @@ class EventFrontPage extends Component {
         }
 
         return(
-            <Grid columns={2} stackable >
+            <Grid  columns={2} stackable >
                 <Grid.Column width="12" style={{paddingRight:0}} >
                     <Segment>
                       <Portal onClose={this.handleClose} open={open}>

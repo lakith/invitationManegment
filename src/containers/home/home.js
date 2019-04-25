@@ -103,16 +103,14 @@ class Home extends Component {
                         </Container>
                  </Grid>
 
-                 <Grid columns={3} style={{marginTop:"2%",marginBottom:"2%"}}>
-                    <Grid.Column width={1}>
-                    </Grid.Column>
-                    <Grid.Column width={14}>
+                 <Grid  style={{marginTop:"2%",marginBottom:"2%"}}>
+                    <Grid.Column computer={16} tablet={14} mobile={14}>
                         <Container fluid style={{textAlign:"center",marginTop:"3%"}} >
                             <font size="5" ><Header size="huge" style={{fontFamily:"'Raleway', 'sans-serif'",fontWeight:300}} >Upcomming Events</Header></font>
                             <h3 style={{fontFamily:"'Raleway', 'sans-serif'",color:"#858484",fontWeight:300}}>Here is a list of the upcoming events. Register and RSVP now to secure your place</h3>
                         </Container>
                         <Container fluid style={{textAlign:"center",marginTop:"3%"}} >
-                                <Card fluid>
+                                <Card fluid link> 
                                     <Image src={upcomming} />
                                     <Card.Content style={{textAlign:"left"}}>
                                     <Card.Header style={{fontFamily:"'Raleway', 'sans-serif'",fontWeight:300}}>Event manegement short course by melbourn university australian center of event manegement</Card.Header>
@@ -130,24 +128,18 @@ class Home extends Component {
                                 </Card>
                         </Container>
                     </Grid.Column>
-                    <Grid.Column  width={1}>
-                    </Grid.Column>
                  </Grid>
-                 <Grid columns={3} style={{marginTop:"2%",marginBottom:"2%"}}>
-                    <Grid.Column width={1}>
-                    </Grid.Column>
-                    <Grid.Column width={14}>
-                        <Container fluid style={{textAlign:"center",marginTop:"3%"}} >
+                 <Grid style={{marginTop:"2%",marginBottom:"2%"}}>
+                    <Grid.Column width={16}>
+                        <center><Container fluid style={{textAlign:"center",marginTop:"3%"}} >
                             <font size="5" ><Header size="huge" style={{fontFamily:"'Raleway', 'sans-serif'",fontWeight:300}} >Check Latest Events</Header></font>
                             <h3 style={{fontFamily:"'Raleway', 'sans-serif'",color:"#858484",fontWeight:300}}>Here is a list of the latest events. Register and RSVP now to secure your place</h3>
-                        </Container>
-                    </Grid.Column>
-                    <Grid.Column  width={1}>
+                        </Container></center>
                     </Grid.Column>
                  </Grid>
                  <Grid columns={1} style={{marginTop:"2%",marginBottom:"2%"}}>
                    
-                    <Grid.Column width={16}>
+                    <Grid.Column computer={16} mobile={14} tablet={16}>
                         <div style={{textAlign:"center"}}>
                             <Dropdown style={{fontFamily:"'Raleway', 'sans-serif'",color:"#858484",fontWeight:300,textAlign:"middle"}} text='Clik here to filer events..'  icon='filter'  floating labeled button style={{backgroundColor:"#F7F7F7"}} className='icon'>
                                 <Dropdown.Menu>

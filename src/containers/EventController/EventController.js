@@ -171,8 +171,8 @@ class EventController extends Component {
         return(
             <div>
                 <NavBar />
-                <Grid columns={2} stackable style={{border:"2px solid black"}}>
-                    <Grid.Column width="2" style={{paddingLeft:0,paddingRight:0}} >
+                <Grid columns={2} stackable style={{}}>
+                    <Grid.Column width="2" style={{paddingLeft:0,paddingRight:0,marginTop:-13}} >
                         <Segment  fluid  style={{padding:0,border:"1px solid green",width:"100%"}}>
                         <Menu className="MenuScroll" fluid inverted pointing vertical style={{width:"100%",marginRight:500}}>
                             <Menu.Item 
@@ -257,7 +257,7 @@ class EventController extends Component {
                         </Menu>
                         </Segment>
                     </Grid.Column>
-                    <Grid.Column width="14" style={{paddingLeft:0,paddingRight:0,width:"100%"}}>
+                    <Grid.Column width="14" style={{paddingLeft:0,paddingRight:0,marginTop:-12,width:"100%"}}>
                             <Container fluid style={{height:602,overflow:"auto"}}>
                                 <div style={{paddingTop:"1.5%",paddingBottom:"1.5%"}}>
                                 {headerContent}
