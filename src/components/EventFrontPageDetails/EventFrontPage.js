@@ -28,9 +28,7 @@ class EventFrontPage extends Component {
         this.handleChange = this.handleChange.bind(this)
       }
 
-      componentDidMount() {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      }
+
     
       handleClose = () => this.setState({ open: false })
       handleOpen = () => this.setState({ open: true })

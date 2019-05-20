@@ -12,6 +12,8 @@ import * as oneEventActions from '../../store/index'
 import EventForm from '../../components/EventForm/EventForm';
 import EventSpecialGuest from '../../components/EventSpeicialGuest/EventSpecialGuest';
 import EventGeneralGuest from '../../components/EventGeneralGuest/EventgeneralGuest';
+import FilterUsers from '../../components/FilterUsers/FilterUsers';
+import Peyment from '../../components/Peyment/Peyment';
 
 class EventController extends Component {
 
@@ -39,7 +41,23 @@ class EventController extends Component {
         }
         if(id === 7){
             this.redirectGeneralGuestEdit()
-        } 
+        }
+        if(id === 8){
+            this.redirectUserFilter();
+        }  
+        if(id === 9){
+            this.redirectPeyment();
+        }
+    }
+
+    redirectPeyment = () => {
+        console.log("/event-controller/"+this.props.match.params.id+"/peyment");
+        this.props.history.replace('/event-controller/'+this.props.match.params.id+"/peyment");
+    }
+
+    redirectUserFilter = () => {
+        console.log("user-filer");
+        this.props.history.replace('/event-controller/'+this.props.match.params.id+"/filter-users");
     }
 
     redirectGeneralGuestEdit = () => {
@@ -166,6 +184,30 @@ class EventController extends Component {
                 </Header.Content>
             </Header>
           )
+        } else if(this.state.headerId === 8){
+            headerContent = (
+                <Header as='h2'>
+                <Icon name='users' />
+                <Header.Content>
+                    Filter Event Users 
+                    <Header.Subheader>
+                        Manege Event Guests 
+                    </Header.Subheader>
+                </Header.Content>
+            </Header>
+          )
+        } else if(this.state.headerId === 9){
+            headerContent = (
+                <Header as='h2'>
+                <Icon name='dollar' />
+                <Header.Content>
+                    Peyment Information 
+                    <Header.Subheader>
+                        Manege Your Evene peyment 
+                    </Header.Subheader>
+                </Header.Content>
+            </Header>
+          )
         }
 
         return(
@@ -181,8 +223,7 @@ class EventController extends Component {
                                 active={activeItem === 'basic'}
                                 onClick={()=>this.handleItemClick(this,"basic",1)}
                                 style={{textAlign:"center",alignSelf: 'stretch'}}
-                            >
-                                     
+                            >       
                                      <center><Icon size='big' color='orange' name='qrcode'/></center>
                                      <br />
                                      <strong>Basic Configuration</strong>
@@ -254,11 +295,33 @@ class EventController extends Component {
                                      <br />
                                      <strong>Event General Guests</strong>
                             </Menu.Item>
+                            <Menu.Item
+                            className="MenuStyle"
+                            name='userSelection'
+                            active={activeItem === 'userSelection'}
+                            onClick={()=>this.handleItemClick(this,"userSelection",8)}
+                            style={{textAlign:"center",alignSelf: 'stretch'}}
+                            >
+                                     <center><Icon size='big' color='orange' name='users'/></center>
+                                     <br />
+                                     <strong>Filter Users</strong>
+                            </Menu.Item>
+                            <Menu.Item
+                            className="MenuStyle"
+                            name='peymant'
+                            active={activeItem === 'peymant'}
+                            onClick={()=>this.handleItemClick(this,"peymant",9)}
+                            style={{textAlign:"center",alignSelf: 'stretch'}}
+                            >
+                                     <center><Icon size='big' color='orange' name='dollar'/></center>
+                                     <br />
+                                     <strong>Peyment</strong>
+                            </Menu.Item>
                         </Menu>
                         </Segment>
                     </Grid.Column>
                     <Grid.Column width="14" style={{paddingLeft:0,paddingRight:0,marginTop:-12,width:"100%"}}>
-                            <Container fluid style={{height:602,overflow:"auto"}}>
+                            <Container fluid style={{height:740,overflow:"auto"}}>
                                 <div style={{paddingTop:"1.5%",paddingBottom:"1.5%"}}>
                                 {headerContent}
                                 </div>
@@ -268,6 +331,8 @@ class EventController extends Component {
                                     <Route path={this.props.match.path +"/event-form-config"} component={EventForm} />
                                     <Route path={this.props.match.path +"/update-event-special-guest"} component={EventSpecialGuest} />
                                     <Route path={this.props.match.path +"/update-event-general-guest"} component={EventGeneralGuest} />
+                                    <Route path={this.props.match.path +"/filter-users"} component={FilterUsers} />
+                                    <Route path={this.props.match.path +"/peyment"} component={Peyment} />
                             </Container>
                     </Grid.Column>
                 </Grid>

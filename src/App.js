@@ -19,6 +19,8 @@ import UserProfile from './containers/UserProfile/UserProfile';
 import UserSearch from './containers/UserSearch/UserSearch';
 import EventView from './containers/EventView/EventView';
 import EventViewOriginal from './containers/EventView/EventViewOriginal';
+import TicketView from './containers/TicketView/TicketView';
+import UserConfirmation from './containers/UserConfirmation/UserConfirmation';
 
 class App extends Component {
   
@@ -39,11 +41,13 @@ class App extends Component {
           <Route path="/event-base" component={EventCreationBase} />
           <Route path="/my-events" component={Myevents} />
           <Route path="/event-controller/:id" component={EventController} />
+          <Route path="/ticket-view" component={TicketView} />
           <Route path="/test" component={Test} />
           <Route path="/profile" component={UserProfile} />
           <Route path="/user-search" component={UserSearch} />
           <Route path="/event-view" component={EventView} />
           <Route path="/view-event" component={EventViewOriginal} />
+          <Route path="/user-confirmation" component={UserConfirmation} />
           <Route path="/" exact component={Home} />
           <Redirect to="/" />
         </Switch>
@@ -60,6 +64,7 @@ class App extends Component {
           <Route path="/event-controller/:id" component={EventController} />
           <Route path="/test" component={Test} />
           <Route path="/profile" component={UserProfile} />
+          <Route path="/user-confirmation" component={UserConfirmation} />
           <Route path="/user-search" component={UserSearch} />
           <Route path="/" exact component={HomeBase} />
           <Redirect to="/" />

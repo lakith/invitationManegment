@@ -3,6 +3,8 @@ import { Grid, Segment, Container, Image, Header, Icon, Dropdown, List, Label, I
 import Glass from '../../assessts/glasses-1477081_640-low.jpg.jpg'
 import * as oneEventActions from '../../store/index'
 import {connect} from 'react-redux'
+import axios from '../../axios-base'
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 const options = [
     { key: 1, text: ' Private ', value: 1 },
@@ -14,12 +16,19 @@ const options2 = [
     { key: 2, text: ' Free ', value: 2 }
 ]
 
-const description = [
-    'Amy is a violinist with 2 years experience in the wedding industry.',
-    'She enjoys the outdoors and currently resides in upstate New York.',
-  ].join(' ')
+// const description = [
+//     'Amy is a violinist with 2 years experience in the wedding industry.',
+//     'She enjoys the outdoors and currently resides in upstate New York.',
+//   ].join(' ')
   
 class EventOtherDetails extends Component {
+
+    state={
+        group:"",
+        category:"",
+        guests:0,
+        loading:false
+    }
 
     componentDidMount() {
         if(this.props.eventData){
@@ -28,6 +37,63 @@ class EventOtherDetails extends Component {
             }
         } else {
             this.props.onEventInit(this.props.match.params.id,this.props.accessToken);
+        }
+    }
+
+    handleGroup = (e, { value }) => {
+        this.setState({
+            group:value
+        })
+    }
+
+    handleCategory = (e, { value }) => {
+        this.setState({
+            category: value
+        })
+    }   
+
+    handleGuests = (event) => {
+        this.setState({
+            guests:event.target.value
+        });
+    }
+
+    submitData = (event) => {
+        event.preventDefault();
+        if(this.state.group === ""){
+            NotificationManager.error('Error message', 'You must Select an event Group', 3000);
+        } else if (this.state.category === ""){ 
+            NotificationManager.error('Error message', 'You must Select an event Category', 3000);
+        } else if (this.state.guests === 0 ){
+            NotificationManager.error('Error message', 'You must specify guests', 3000);
+        } else {
+
+            this.setState({
+                loading:true
+            })
+
+            let data = {
+                eventId: this.props.match.params.id,
+                maximumNumberOfGuests: this.state.guests,
+                eventCategoryId: this.state.category,
+                eventGroupId: this.state.group
+            }
+
+           axios({
+               method:'post',
+               url:"/event/other-data",
+               data:data
+           }).then((response)=>{
+                this.setState({
+                    loading:false
+                })
+                NotificationManager.success('Success message', 'Data Submitted Successfully.');
+           }).catch((error)=>{
+                this.setState({
+                    loading:false
+                })
+                NotificationManager.error('Error message', 'Some thing went wrong', 3000);
+           })
         }
     }
 
@@ -71,28 +137,28 @@ class EventOtherDetails extends Component {
                         &nbsp;Event Group. &nbsp;&nbsp;&nbsp;
                         </Label>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Dropdown  style={{width:"50%"}} clearable options={options} selection />
+                        <Dropdown  style={{width:"50%"}} clearable options={options} selection onChange={this.handleGroup} value={this.state.group} />
                         </List.Item>
                         <List.Item>
                         <Label color='teal' horizontal>
                             Event Category.
                         </Label>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Dropdown  style={{width:"50%"}} clearable options={options2} selection />
+                        <Dropdown  style={{width:"50%"}} clearable options={options2} selection onChange={this.handleCategory} value={this.state.category} />
                         </List.Item>
                         <List.Item>
                         <Label color='teal' horizontal>
                             Maximum No Of Guests.
                         </Label>
                         &nbsp;&nbsp;&nbsp;
-                        <Input style={{width:"50%"}} placeholder='No of Guests...' />
+                        <Input style={{width:"50%"}} placeholder='No of Guests...' onChange={this.handleGuests} value={this.state.guests} />
                         </List.Item>
                         </List>
                         <List.Item>
                         <Button.Group fluid>
-                            <Button color="red">Clear Data</Button>
+                            <Button  color="red">Clear Data</Button>
                             <Button.Or />
-                            <Button positive>Save Data</Button>
+                            <Button loading={this.state.loading} onClick={this.submitData} positive>Save Data</Button>
                         </Button.Group>
                         </List.Item>
                         </Segment>
@@ -134,6 +200,7 @@ class EventOtherDetails extends Component {
                 <Grid.Column width="4" >
                     <Segment>test 2</Segment>
                 </Grid.Column>
+                <NotificationContainer/>
         </Grid>
       )
     }

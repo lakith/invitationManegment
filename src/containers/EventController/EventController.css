@@ -17,5 +17,4 @@ a.active {
 .MenuScroll {
     direction:rtl !important;
     overflow:auto;
-    height: 600px;
 }

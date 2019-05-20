@@ -1,6 +1,10 @@
 import React,{Component} from 'react'
-import { Button, Checkbox, Form,Dropdown,Radio, Grid, Segment, Header, Icon, TextArea, Popup, Message, Modal } from 'semantic-ui-react'
+import { Button, Checkbox, Form,Dropdown,Radio, Grid, Segment, Header, Icon, TextArea, Popup, Message, Modal, Confirm } from 'semantic-ui-react'
 import "./EventForm.css"
+import * as oneEventActions from '../../store/index'
+import {connect} from 'react-redux'
+import axios from '../../axios-base';
+
 
 const options = [
   { key: 'text', text: 'text', value: 'text' },
@@ -12,6 +16,7 @@ const options = [
 class EventForm extends Component {
   
   state = {
+    eventId : null,
     radioValue : null,
     elementName: "",
     dropDownValue : "",
@@ -23,9 +28,67 @@ class EventForm extends Component {
     submitState : null,
     buttonColor:null,
     options2: [],
-    modalOpen: false
-
+    modalOpen: false,
+    nullError: false,
+    submitLoad: false,
+    submitSuccess: false,
+    submitError: false,
+    open: false,
+    openConfirm:false
   }
+
+  componentDidMount() {
+    if(this.props.eventData){
+        if(this.props.eventData.eventId !== this.props.match.params.id){
+            this.props.onEventInit(this.props.match.params.id,this.props.accessToken);
+        }
+    } else {
+        this.props.onEventInit(this.props.match.params.id,this.props.accessToken);
+    }
+ }
+
+  onFormDatasubmit = () => {
+      if(!this.state.inputElements.length){
+        this.setState({
+            nullError:true,
+            openConfirm:false,
+        })
+      } else {
+        this.setState({
+            submitLoad:true,
+            submitError:false,
+            submitSuccess:false,
+            openConfirm:false,
+            nullError:false
+        })
+        let data = {
+            eventId: this.props.match.params.id,
+            formConfigDTOS:this.state.inputElements
+        }
+
+        axios({
+            method:'post',
+            url:"/event-form/save-event-config",
+            data:data
+        }).then((response)=>{
+            this.setState({
+                submitSuccess : true,
+                submitError : false,
+                submitLoad : false
+            }) 
+        }).catch((error)=> {
+            this.setState({
+                submitSuccess : false,
+                submitError : true,
+                submitLoad : false
+            }) 
+        })
+
+      }
+  }
+
+  showConfirm = () => this.setState({ openConfirm: true })
+  handleCancel = () => this.setState({ openConfirm: false })
 
   show = dimmer => () => this.setState({ dimmer, open: true })
 
@@ -106,6 +169,8 @@ class EventForm extends Component {
     if(this.state.displayError){
         buttonColor = "orange"
     }
+
+    
 
     
 
@@ -293,6 +358,37 @@ class EventForm extends Component {
                                 <Button type='submit' onClick={this.onElementSubmit}>Submit</Button>
                         </Form>
                     </Segment>
+                    <Message
+                        error
+                        header='Form Cannot be null'
+                        style={{
+                            display:this.state.nullError ? "block":"none"
+                        }}
+                        list={[
+                        'Form Data Must not be empty.'
+                        ]}
+                    />
+                    <Message
+                        error
+                        header='Something went Wrong'
+                        style={{
+                            display:this.state.submitError ? "block":"none"
+                        }}
+                        list={[
+                        'Check Your Internet Connection.',
+                        'Try Again Later.'
+                        ]}
+                    />
+                    <Message
+                        success
+                        header='Form Submitted Successfully'
+                        style={{
+                            display:this.state.submitSuccess ? "block":"none"
+                        }}
+                        list={[
+                        'Form Saved successfully.'
+                        ]}
+                    />
                 </Grid.Column>
                 <Grid.Column width="6" >
                     {displaySeg}
@@ -304,6 +400,17 @@ class EventForm extends Component {
                         <Header size='medium'>View Your Current Form</Header>
                         <Button onClick={this.show('blurring')} color='violet' fluid>View Your Form Design</Button>
                     </Segment>
+                    <Segment>
+                        <Header size='medium'>Submit Your Form Design</Header>
+                        <Button onClick={this.showConfirm} loading={this.state.submitLoad} color='violet' fluid>Submit Your Form Design</Button>
+                    </Segment>
+                    <Confirm
+                    open={this.state.openConfirm}
+                    content='Are You Sure ?'
+                    onCancel={this.handleCancel}
+                    onConfirm={this.onFormDatasubmit}
+                    style={{height:"20%",marginTop:"18%",marginLeft:"25%"}}
+                    />
                 </Grid.Column>
             </Grid>
         </Grid.Column>
@@ -316,4 +423,19 @@ class EventForm extends Component {
   
 }
 
-export default EventForm;
+const mapDispatchToProps = (dispatch) => {
+    return{
+        onEventInit : (eventID,accessToken) => dispatch(oneEventActions.OneEventGetData(eventID,accessToken))
+    }
+}
+
+const mapStateToProps = (state) => { 
+    return{
+        eventStart : state.oneEvent.oneEventLoad,
+        eventFail : state.oneEvent.oneEventError, 
+        eventData : state.oneEvent.oneEventData,
+        accessToken : state.auth.accessToken
+    }
+ };
+
+export default  connect(mapStateToProps,mapDispatchToProps) (EventForm);
