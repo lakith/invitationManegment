@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import { Grid, Segment, Header, Icon,  Label, List, Button, Message, Menu, Input, Form } from 'semantic-ui-react';
+import { Grid, Segment, Header, Icon,  Label, List, Button,  Menu, Input, Form, GridColumn, Image, Divider } from 'semantic-ui-react';
 import axios from '../../axios-base'
 import '../EventAdmins/EventAdmins.css'
 import {NotificationContainer, NotificationManager} from 'react-notifications';
+import holi from '../../assessts/holi.jpg'
 
 
 class FilterUsers extends Component{
@@ -20,7 +21,9 @@ class FilterUsers extends Component{
         noOFAdmins:0,
         activeItem: 'home',
         inputValue:"",
-        userList:[]
+        userList:[],
+        loading:false,
+        error:false
     }
 
 
@@ -136,7 +139,44 @@ class FilterUsers extends Component{
       })
   }
 
-     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
+  submitEvent = () => {
+
+    let data = {
+        eventId: this.props.match.params.id,
+        emails : this.state.userList
+    }
+
+    if(!this.state.userList.length){
+        NotificationManager.warning('Warning message', 'User List cannot be empty', 3000);
+    }
+
+    this.setState({
+        loading:true,
+        error:false
+    })
+    
+
+    axios({
+        method:'post',
+        url:"/send-invitations",
+        data:data
+    }).then((response)=>{
+        this.setState({
+            loading:false,
+            error:false
+        }) 
+        NotificationManager.success('Success message', 'Notifications sent Successfully');
+    }).catch((error)=> {
+        this.setState({
+            loading:false,
+            error:true
+        }) 
+        NotificationManager.success('Error message', 'Something went Wrong');
+    })
+
+  }
 
      render(){
 
@@ -218,15 +258,43 @@ class FilterUsers extends Component{
                         <Menu.Item>{user}</Menu.Item>
                     )) : (<Menu.Item name='Add Users....' />) }
                 </Menu>
-                <Button color="violet" floated="right">Submit Users</Button>
+                <Button color="violet" onClick={this.submitEvent} loading={this.state.loading} floated="right">Submit Users</Button>
                 </Grid.Column>
                 <Grid.Column width="4" >
-
+                <Grid columns={2} stackable style={{marginTop:"-125%"}}>
+                        <GridColumn width="16">
+                            <Segment>
+                            <Header size='medium'>
+                              Actions
+                            </Header>
+                            <Divider />
+                            <List>
+                            <List.Item>
+                            <Label size='small' style={{marginBottom:"4px"}}>Status</Label><span style={{color:"#FF69B4"}}>&nbsp;&nbsp;Draft</span><br />
+                            </List.Item>
+                            <List.Item>
+                            <Label size='small'style={{marginBottom:"4px"}}>Category</Label><span  style={{color:"#FF69B4"}} >&nbsp;&nbsp;Draft</span><br />
+                            </List.Item>
+                            <List.Item>
+                            <Label size='small'style={{marginBottom:"4px"}}>Type</Label><span  style={{color:"#FF69B4"}} >&nbsp;&nbsp;Draft</span><br />
+                            </List.Item>
+                            <List.Item>
+                            <Label size='small'style={{marginBottom:"4px"}}>Publish</Label><span  style={{color:"#FF69B4"}}>&nbsp;&nbsp;Draft</span><br />
+                            </List.Item>
+                            </List>
+                            </Segment>
+                        </GridColumn>
+                        <GridColumn width="16">
+                            <Segment style={{padding:0,position: "relative"}}>
+                              <Image  fluid src={holi} />
+                              <Label attached='top left' style={{position:"absolute"}} color="blue">Sponsored</Label>
+                            </Segment>
+                        </GridColumn>
+                    </Grid>
                 </Grid.Column>
+                <NotificationContainer />
             </Grid>   
         </React.Fragment>
-
-            
         )
     }   
 }

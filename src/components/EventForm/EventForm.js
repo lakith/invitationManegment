@@ -1,10 +1,10 @@
 import React,{Component} from 'react'
-import { Button, Checkbox, Form,Dropdown,Radio, Grid, Segment, Header, Icon, TextArea, Popup, Message, Modal, Confirm } from 'semantic-ui-react'
+import { Button, Checkbox, Form,Dropdown,Radio, Grid, Segment, Header, Icon, TextArea, Popup, Message, Modal, Confirm, GridColumn, Divider, List, Label, Image } from 'semantic-ui-react'
 import "./EventForm.css"
 import * as oneEventActions from '../../store/index'
 import {connect} from 'react-redux'
 import axios from '../../axios-base';
-
+import holi from '../../assessts/holi.jpg'
 
 const options = [
   { key: 'text', text: 'text', value: 'text' },
@@ -415,8 +415,37 @@ class EventForm extends Component {
             </Grid>
         </Grid.Column>
         <Grid.Column width="4" >
-            <Segment fluid></Segment>
-        </Grid.Column>
+        <Grid columns={2} stackable>
+            <GridColumn width="16">
+                <Segment>
+                    <Header size='medium'>
+                        Actions
+                    </Header>
+                    <Divider />
+                    <List>
+                        <List.Item>
+                            <Label size='small' style={{marginBottom:"4px"}}>Status</Label><span style={{color:"#FF69B4"}}>&nbsp;&nbsp;Draft</span><br />
+                        </List.Item>
+                        <List.Item>
+                            <Label size='small'style={{marginBottom:"4px"}}>Category</Label><span  style={{color:"#FF69B4"}} >&nbsp;&nbsp;Draft</span><br />
+                        </List.Item>
+                        <List.Item>
+                            <Label size='small'style={{marginBottom:"4px"}}>Type</Label><span  style={{color:"#FF69B4"}} >&nbsp;&nbsp;Draft</span><br />
+                        </List.Item>
+                        <List.Item>
+                            <Label size='small'style={{marginBottom:"4px"}}>Publish</Label><span  style={{color:"#FF69B4"}}>&nbsp;&nbsp;Draft</span><br />
+                        </List.Item>
+                    </List>
+                </Segment>
+            </GridColumn>
+            <GridColumn width="16">
+                <Segment style={{padding:0,position: "relative"}}>
+                    <Image fluid src={holi} />
+                        <Label attached='top left' style={{position:"absolute"}} color="blue">Sponsored</Label>
+                              </Segment>
+            </GridColumn>
+        </Grid>
+    </Grid.Column>
   </Grid>
   )
 }

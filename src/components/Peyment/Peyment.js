@@ -1,14 +1,54 @@
-import React, { Component } from 'react'
-import { Grid, Card, Image, Button, List, Popup, Header } from 'semantic-ui-react';
+import React, { Component } from 'react';
+import { Grid, Card, Image, Button, List, Popup, Header, Message, GridColumn, Segment, Divider, Label } from 'semantic-ui-react';
 import Silver from '../../assessts/silvercoin.jpg';
 import Gold from '../../assessts/goldcoin.jpg';
 import Platinum from '../../assessts/platinumcoin.jpg';
-import Master from '../../assessts/master.png'
-import Visa from '../../assessts/visa.png'
-import Amarican from '../../assessts/amarican.png'
-import Paypal from '../../assessts/peypal.jpg'
+import Master from '../../assessts/master.png';
+import Visa from '../../assessts/visa.png';
+import Amarican from '../../assessts/amarican.png';
+import Paypal from '../../assessts/peypal.jpg';
+import axios from '../../axios-base';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import holi from '../../assessts/holi.jpg'
 
 class Peyment extends Component {
+
+    state  = {
+        loading:false,
+        error:false
+    }
+
+    submitandpublish = (peymentid) =>  {
+        console.log("entred");
+        let data = {
+            peymentPackageId:peymentid,
+            eventId:this.props.match.params.id
+        }
+        this.setState({
+            loading:true,
+            error:false
+        })
+        
+        axios({
+            method:'post',
+            url:"/peyment-and-publish",
+            data:data
+        }).then((response)=>{
+            this.setState({
+                loading:false,
+                error:false
+            }) 
+            NotificationManager.success('Success message', 'Eevnt Published Successfully');
+        }).catch((error)=> {
+            this.setState({
+                loading:false,
+                error:true
+            }) 
+            NotificationManager.success('Error message', 'Something went Wrong');
+        })
+
+    }
+
     render() {
         return(
             <Grid columns={2}>
@@ -40,7 +80,7 @@ class Peyment extends Component {
                             </Card.Content>
                             </Card>
                             <div style={{paddingLeft:"12%"}} >
-                            <Button color='violet'>
+                            <Button onClick={()=>this.submitandpublish(1)} loading={this.state.loading} color='violet'>
                                 Choose Plan And Publish
                             </Button>
                             </div>
@@ -72,7 +112,7 @@ class Peyment extends Component {
                                 </Card.Content>
                                 </Card>
                                 <div style={{paddingLeft:"12%"}} >
-                            <Button color='violet'>
+                            <Button onClick={()=>this.submitandpublish(2)} loading={this.state.loading} color='violet'>
                                 Choose Plan And Publish
                             </Button>
                             </div>
@@ -103,7 +143,7 @@ class Peyment extends Component {
                                 </Card.Content>
                             </Card>
                             <div style={{paddingLeft:"12%"}} >
-                            <Button color='violet'>
+                            <Button onClick={()=>this.submitandpublish(3)} loading={this.state.loading} color='violet'>
                                 Choose Plan And Publish
                             </Button>
                             </div>
@@ -143,6 +183,12 @@ class Peyment extends Component {
 
                     <Grid style={{paddingTop:45}}>
                         <Grid.Column>
+                        {this.state.error ? (
+                              <Message negative>
+                              <Message.Header>Error Occoured</Message.Header>
+                              <p>Something went wrong</p>
+                            </Message>
+                        ) : null}
                         <div>
                             <center>
                                 <Image.Group size='tiny'> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -157,9 +203,39 @@ class Peyment extends Component {
                     </Grid>
                 </Grid.Column>
                 <Grid.Column width={4}>
-                    
+                <Grid columns={2} stackable>
+            <GridColumn width="16">
+                <Segment>
+                    <Header size='medium'>
+                        Actions
+                    </Header>
+                    <Divider />
+                    <List>
+                        <List.Item>
+                            <Label size='small' style={{marginBottom:"4px"}}>Status</Label><span style={{color:"#FF69B4"}}>&nbsp;&nbsp;Draft</span><br />
+                        </List.Item>
+                        <List.Item>
+                            <Label size='small'style={{marginBottom:"4px"}}>Category</Label><span  style={{color:"#FF69B4"}} >&nbsp;&nbsp;Draft</span><br />
+                        </List.Item>
+                        <List.Item>
+                            <Label size='small'style={{marginBottom:"4px"}}>Type</Label><span  style={{color:"#FF69B4"}} >&nbsp;&nbsp;Draft</span><br />
+                        </List.Item>
+                        <List.Item>
+                            <Label size='small'style={{marginBottom:"4px"}}>Publish</Label><span  style={{color:"#FF69B4"}}>&nbsp;&nbsp;Draft</span><br />
+                        </List.Item>
+                    </List>
+                </Segment>
+            </GridColumn>
+            <GridColumn width="16">
+                <Segment style={{padding:0,position: "relative"}}>
+                    <Image fluid src={holi} />
+                        <Label attached='top left' style={{position:"absolute"}} color="blue">Sponsored</Label>
+                </Segment>
+            </GridColumn>
+        </Grid>
                 </Grid.Column>
-            </Grid>
+                <NotificationContainer />
+             </Grid>
         )
     }
 }

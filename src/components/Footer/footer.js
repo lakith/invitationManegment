@@ -10,13 +10,15 @@ import {
   } from 'semantic-ui-react'
 
 import logo from '../../assessts/rsvpster-logo (1).png'
-import footerImage from '../../assessts/shutterstock_510365542_Web.jpg'
+//import footerImage from '../../assessts/shutterstock_510365542_Web.jpg'
+//import background from '../../assessts/background.jpg'
+import background2 from '../../assessts/bakground2.jpg'
   
 
 const Footer = (props) => {
     return(
     <div>
-    <Segment inverted vertical style={{ padding: '5em 0em',backgroundImage:"url("+footerImage+")"}}>
+    <Segment inverted vertical style={{ padding: '5em 0em',backgroundImage:"url("+background2+")"}}>
       <Container>
         <Grid divided inverted stackable>
           <Grid.Row>

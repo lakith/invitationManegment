@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import background from '../../assessts/backgroundView.jpg'
-import { Grid, Segment, Container, Image, Header, Icon, Button, Divider, GridColumn, Label, Comment, Form } from 'semantic-ui-react';
+import { Grid, Segment, Container, Image, Header, Icon, Button,  GridColumn, Label, Comment, Form } from 'semantic-ui-react';
 import NavBar from '../../components/NavBar/navBar';
 import Footer from '../../components/Footer/footer';
 import {connect} from 'react-redux';
 import "./EventView.css"
 import AddToCalendar from 'react-add-to-calendar';
 import axios from '../../axios-base'
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser'; 
+import ReactHtmlParser from 'react-html-parser'; 
 import {
     FacebookShareCount,
     GooglePlusShareCount,
@@ -57,6 +57,7 @@ import {
   } from 'react-share';
 
   import {Link} from 'react-router-dom'
+  import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 class EventViewOriginal extends Component{
 
@@ -144,18 +145,31 @@ class EventViewOriginal extends Component{
         })
     }
 
+    buyTickets = () => {
+        if(this.state.eventData.closed) {
+            NotificationManager.error("Event Closed", "You cant buy tickets for this event",3000);
+        }
+        else {
+            let quaryParam = encodeURIComponent("event-id") + '=' + encodeURIComponent(this.state.eventData.eventId);
+            this.props.history.push({
+                pathname:'/ticket-view',
+                search: '?' + quaryParam
+            }) 
+        }
+    }
+
 
     render(){
 
         let eventData = {...this.state.eventData}
 
         let shareUrl=eventData.eventName
-        let title="burger"
+        let title="RSVP STER Events"
         let exampleImage = eventData.eventThumbnail;
         let icon = { 'calendar-plus-o': 'left' };
         let event = {
             title: eventData.eventName ,
-            description: 'This is the sample event provided as an example only',
+            description: 'This event is hosted in RSVP STER',
             location: eventData.eventPlace,
             startTime: eventData.eventStartDate,
             endTime: eventData.eventEndDate
@@ -217,7 +231,7 @@ class EventViewOriginal extends Component{
                         </Container>
                         </Grid.Column>
                         <GridColumn style={{paddingBottom:0}}  computer={4} tablet={4} mobile={16} >
-                            <Button fluid  color="violet" style={{float:"right",marginTop:"-0.6%"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Buy Tickets&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Button>
+                            <Button fluid onClick={this.buyTickets}  color="violet" style={{float:"right",marginTop:"-0.6%"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Buy Tickets&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Button>
                         </GridColumn>
                     </Grid>
                     <Grid columns={1} style={{padding:0}}>
@@ -299,7 +313,7 @@ class EventViewOriginal extends Component{
                         <div className="Demo__container">
                                 <div className="Demo__some-network" >
                                 <FacebookShareButton
-                                    url={shareUrl}
+                                    url={"https://burger-builder-db22d.firebaseapp.com/"}
                                     quote={title}
                                     className="Demo__some-network__share-button">
                                     <FacebookIcon
@@ -605,6 +619,7 @@ class EventViewOriginal extends Component{
                 <Grid.Column width={1}>
                 </Grid.Column>
             </Grid>
+            <NotificationContainer />
             <Footer />
             </React.Fragment>
         )

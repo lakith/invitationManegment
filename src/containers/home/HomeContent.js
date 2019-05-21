@@ -13,9 +13,10 @@ class HomeContent extends Component {
                             <Link to={"/view-event?event="+event.eventId}>
                             <Card link fluid style={{width:"90%"}}>
                             <Image 
+                            size="large"
                             src={event.eventThumbnail}
                             label={{ as: 'a', color: event.closed?"red":"green", content: event.closed?"closed":"pending", icon: event.closed?"window close outline":"rss", ribbon: true }}
-                            style={{height:180}} />
+                            style={{height:"60%"}} />
                             <Card.Content>
                             <Card.Header>{event.eventName}</Card.Header>
                             <Card.Meta>

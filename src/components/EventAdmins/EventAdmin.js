@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import { Grid, Segment, Header, Icon, Search, Label, List, Button, Dropdown, Container, Popup, Message } from 'semantic-ui-react';
+import { Grid, Segment, Header, Icon, Search, Label, List, Button, Dropdown, Container, Popup, Message, GridColumn, Image, Divider } from 'semantic-ui-react';
 import axios from '../../axios-base'
 import './EventAdmins.css'
 import {NotificationContainer, NotificationManager} from 'react-notifications';
+import holi from '../../assessts/holi.jpg'
 
 
 class EventAdmins extends Component{
@@ -284,13 +285,39 @@ class EventAdmins extends Component{
                     </Grid>
                 </Grid.Column>
                 <Grid.Column width="4" style={{paddingRight:0,marginLeft:"-1.5%"}}>
-                    <Segment>bla</Segment>
+                <Grid columns={2} stackable>
+                        <GridColumn width="16">
+                            <Segment>
+                            <Header size='medium'>
+                              Actions
+                            </Header>
+                            <Divider />
+                            <List>
+                            <List.Item>
+                            <Label size='small' style={{marginBottom:"4px"}}>Status</Label><span style={{color:"#FF69B4"}}>&nbsp;&nbsp;Draft</span><br />
+                            </List.Item>
+                            <List.Item>
+                            <Label size='small'style={{marginBottom:"4px"}}>Category</Label><span  style={{color:"#FF69B4"}} >&nbsp;&nbsp;Draft</span><br />
+                            </List.Item>
+                            <List.Item>
+                            <Label size='small'style={{marginBottom:"4px"}}>Type</Label><span  style={{color:"#FF69B4"}} >&nbsp;&nbsp;Draft</span><br />
+                            </List.Item>
+                            <List.Item>
+                            <Label size='small'style={{marginBottom:"4px"}}>Publish</Label><span  style={{color:"#FF69B4"}}>&nbsp;&nbsp;Draft</span><br />
+                            </List.Item>
+                            </List>
+                            </Segment>
+                        </GridColumn>
+                        <GridColumn width="16">
+                            <Segment style={{padding:0,position: "relative"}}>
+                              <Image fluid src={holi} />
+                              <Label attached='top left' style={{position:"absolute"}} color="blue">Sponsored</Label>
+                            </Segment>
+                        </GridColumn>
+                    </Grid>
                 </Grid.Column>
                 <NotificationContainer/>
                </Grid>
-               
-            
-
         )
     }   
 }
